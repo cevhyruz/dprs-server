@@ -88,6 +88,11 @@ class Server {
     const password = process.env.DB_PASSWORD;
     const dbName = process.env.DB_NAME;
 
+    console.log('host: ', host);
+    console.log('host: ', username);
+    console.log('host: ', password);
+    console.log('host: ', dbName);
+
     const mongoUrl = new URL(`mongodb+srv://${host}/${dbName}`);
     mongoUrl.username = username;
     mongoUrl.password = password;
