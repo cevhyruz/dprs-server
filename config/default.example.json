@@ -1,0 +1,15 @@
+{
+  "dbConfig": {
+    "host": "your-db-host.mongodb.net",
+    "username": "your-db-username",
+    "password": "your-db-password",
+    "dbName": "your-db-name",
+    "optionalParams": "retryWrites=true&w=majority&appName=YourAppName"
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 9000,
+    "domain": "127.0.0.1:9000",
+    "apiBaseRoot": "/api"
+  }
+}

@@ -1,0 +1,4 @@
+
+# ignore all configs aside from the default template
+config/*
+!default.example.json
