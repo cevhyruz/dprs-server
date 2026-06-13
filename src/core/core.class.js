@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 
 const path = require('path');
 const fs = require('fs');
-const { warn } = require('console');
 
 class Core {
 
@@ -19,8 +18,7 @@ class Core {
     directories.forEach((dir) => {
       const directory = path.resolve(dir);
       if (!fs.existsSync(directory)) {
-        console.warn(`Directory '${directory}' not found`);
-        console.warn(`check 'endpoint' parameter in your app.js`);
+        throw new Error(`Directory '${directory}' not found. Check 'endpoint' parameter in app.js`);
       }
       const walk = (currentDir) => {
         fs.readdirSync(currentDir).forEach((file) => {

@@ -38,7 +38,7 @@ class Server {
   init(opts) { // {{{1
     // this.http.listen(opts.port, opts.host, function() {
     this.http.listen(opts.port, function() {
-      console.log(`\x1b[32m${name}\x1b[0m started at ${opts.host}:${opts.port}`);
+      console.log(`\x1b[32m${name}\x1b[0m started at http://localhost:${opts.port}`);
     });
   }
 
@@ -53,6 +53,15 @@ class Server {
     });
 
     Core.loadRouteModules(this.opts.endpoints, (module, file) => {
+
+      if (!module) {
+        console.warn(`Skipping empty module: ${file}`);
+        return;
+      }
+      if (typeof module !== 'function') {
+        console.warn(`\x1b[43m\x1b[30mInvalid route module in: ${file}\x1b[0m`);
+        return;
+      }
       const router = this.express.Router();
       this.app.use(this.opts.apiBasePath, module(router));
       console.log(`\x1b[32m${name}\x1b[0m loaded ${path.basename(file)}`);
