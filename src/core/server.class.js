@@ -36,7 +36,8 @@ class Server {
   }
 
   init(opts) { // {{{1
-    this.http.listen(opts.port, opts.host, function() {
+    // this.http.listen(opts.port, opts.host, function() {
+    this.http.listen(opts.port, function() {
       console.log(`\x1b[32m${name}\x1b[0m started at ${opts.host}:${opts.port}`);
     });
   }
