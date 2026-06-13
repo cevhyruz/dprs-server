@@ -88,16 +88,9 @@ class Server {
     const password = process.env.PASSWORD;
     const dbName = process.env.DB_NAME;
 
-
-    
-
-    const mongoUrl = new URL(`mongodb+srv://${username}:${password}@${host}/?appName=Cluster0`);
-    // mongoUrl.username = username;
-    // mongoUrl.password = password;
-    
     try {
       console.log('connecting to db..');
-      await mongoose.connect(mongoUrl.toString(), {});
+      await mongoose.connect(process.env.MONGODB_URI);
       if (!silent) {
         console.log('connected to mongodb');
       }
