@@ -97,6 +97,7 @@ class Server {
     }
     catch (error) {
       console.log('cannot connect to mongodb');
+      console.error(error); // IMPORTANT
       mongoose.disconnect();
       setTimeout(this.dbConnect.bind(this), 5000);
     }
