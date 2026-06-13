@@ -19,7 +19,7 @@ const AppError = require('./app-error.class');
 class Server {
   constructor(express, opts = {}) { // {{{1
     this.opts = {
-      host: process.env.HOST || opts.host ,
+      // host: process.env.HOST || opts.host ,
       port: process.env.PORT || opts.port,
       apiBasePath: opts.apiBasePath,
       endpoints: opts.endpoints,
@@ -74,7 +74,11 @@ class Server {
   }
 
   async dbConnect(silent = false) { // {{{1
-    const { username, password, host, dbName } = config.get('dbConfig');
+    const host = process.env.DB_HOST || config.get('dbConfig.host');
+    const username = process.env.DB_USERNAME || config.get('dbConfig.username');
+    const password = process.env.DB_PASSWORD || config.get('dbConfig.password');
+    const dbName = process.env.DB_NAME || config.get('dbConfig.dbName');
+
     const mongoUrl = new URL(`mongodb+srv://${host}/${dbName}`);
     mongoUrl.username = username;
     mongoUrl.password = password;
