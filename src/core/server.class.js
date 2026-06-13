@@ -83,15 +83,10 @@ class Server {
   }
 
   async dbConnect(silent = false) { // {{{1
-    const host = process.env.DB_HOST;
+    const host = process.env.HOST;
     const username = process.env.PASSWORD;
     const password = process.env.USERNAME;
     const dbName = process.env.DB_NAME;
-
-    console.log('host: ', host);
-    console.log('username: ', username);
-    console.log('password: ', password);
-    console.log('dbName: ', dbName);
 
     const mongoUrl = new URL(`mongodb+srv://${host}/${dbName}`);
     mongoUrl.username = username;
