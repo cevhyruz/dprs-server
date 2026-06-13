@@ -83,21 +83,25 @@ class Server {
   }
 
   async dbConnect(silent = false) { // {{{1
-    const host = process.env.HOST;
-    const username = process.env.USERNAME;
-    const password = process.env.PASSWORD;
-    const dbName = process.env.DB_NAME;
+    const host = process.env.HOST || config.get('dbConfig.host') ;
+    const username = process.env.USERNAME || config.get('dbConfig.username');
+    const password = process.env.PASSWORD || config.get('dbConfig.password');
+    const dbName = process.env.DB_NAME || config.get('dbConfig.dbName');
+
+    const mongoUrl = new URL(`mongodb+srv://${host}/${dbName}`);
+    mongoUrl.username = username;
+    mongoUrl.password = password;
 
     try {
       console.log('connecting to db..');
-      await mongoose.connect(process.env.MONGODB_URI);
+      await mongoose.connect(mongoUrl.toString(), {});
       if (!silent) {
         console.log('connected to mongodb');
       }
     }
     catch (error) {
       console.log('cannot connect to mongodb');
-      console.error(error); // IMPORTANT
+      console.error(error);
       mongoose.disconnect();
       setTimeout(this.dbConnect.bind(this), 5000);
     }
