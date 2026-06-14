@@ -44,11 +44,15 @@ class Server {
 
   loadRoutes() { // {{{1
     const  path = require('path');
-    // something nice
+
     this.app.get('/', (req, res) => {
+      const states = { 0: 'disconnected', 1: 'connected', 2: 'connecting', 3: 'disconnecting' };
       res.json({
-          name: 'DPRS API',
-          status: 'running'
+        name: 'DPRS API',
+        status: 'running',
+        database: {
+          status: states[mongoose.connection.readyState]
+        }
       });
     });
 
@@ -69,7 +73,7 @@ class Server {
   }
 
   loadMiddlewares() {
-    const commonMiddlewares = [
+    const coreMiddlewares = [
       this.express.json(),
       helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }),
       mongoSanitize(),
@@ -79,7 +83,7 @@ class Server {
     if (ENV !== 'production') {
       this.app.use(morgan('dev'));
     }
-    this.app.use(commonMiddlewares);
+    this.app.use(coreMiddlewares);
   }
 
   async dbConnect(silent = false) { // {{{1
